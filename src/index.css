@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&family=Inter:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-headline: "Lexend", sans-serif;
+
+  --color-primary: #b7004e;
+  --color-primary-container: #e21364;
+  --color-on-primary-container: #fffbff;
+  
+  --color-surface: #f9f9f9;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f3f3f4;
+  --color-surface-container: #eeeeee;
+  --color-surface-container-high: #e8e8e8;
+  --color-surface-container-highest: #e2e2e2;
+  
+  --color-on-surface: #1a1c1c;
+  --color-on-surface-variant: #5b3f44;
+  
+  --radius-xl: 3rem;
+  --radius-lg: 2rem;
+  --radius-md: 1.5rem;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline;
+  }
+}
+
+.glass-card {
+  @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-lg;
+}
+
+.soft-shadow {
+  box-shadow: 0 10px 30px rgba(23, 26, 38, 0.05);
+}
+
+.primary-shadow {
+  box-shadow: 0 10px 30px rgba(183, 0, 78, 0.3);
+}
+
+/* Custom hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
