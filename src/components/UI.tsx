@@ -1,3 +1,4 @@
+import React from "react";
 import { motion, HTMLMotionProps } from "motion/react";
 import { cn } from "@/src/lib/utils";
 import { LucideIcon } from "lucide-react";

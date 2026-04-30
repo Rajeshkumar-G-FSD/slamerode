@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { MessageSquare, X, Send, Dumbbell, Activity, Sun, Moon, User, CheckCircle2 } from "lucide-react";
 import { GoogleGenAI } from "@google/genai";
@@ -12,6 +12,19 @@ type ChatStep = "initial" | "service" | "timing" | "details" | "ai_qa";
 interface Message {
   role: "user" | "bot";
   content: string;
+}
+
+let aiClient: GoogleGenAI | null = null;
+
+function getAIClient() {
+  if (!aiClient) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not defined");
+    }
+    aiClient = new GoogleGenAI({ apiKey });
+  }
+  return aiClient;
 }
 
 export function ChatWidget() {
@@ -30,8 +43,6 @@ export function ChatWidget() {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -47,6 +58,7 @@ export function ChatWidget() {
     setIsLoading(true);
 
     try {
+      const ai = getAIClient();
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: userMsg,
